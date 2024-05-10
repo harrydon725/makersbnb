@@ -1,12 +1,15 @@
 import os
 from flask import Flask, request, render_template, redirect
 from lib.database_connection import get_flask_database_connection
+
+from datetime import datetime
+from lib.space_repository import *
+from lib.booking import *
+from lib.booking_repository import *
 from lib.user import User
 from lib.user_repository import UserRepository
 from flask_bcrypt import Bcrypt
 from lib.space import *
-from lib.space_repository import *
-
 # Create a new Flask app
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
@@ -110,13 +113,42 @@ def login():
 def get_about():
     return render_template('about.html')
 
-@app.route('/1/spaces', methods=['POST'])
-def post_spaces():
-    return render_template('spaces.html')
 
 @app.route('/1/spaces', methods=['GET'])
 def get_spaces():
     return render_template('spaces.html')
+
+
+@app.route('/1/spaces', methods=['POST'])
+def get_spaces_available_spaces():
+    connection = get_flask_database_connection(app)
+    date = request.form['Pick A Date']
+    datetimevar = datetime.strptime(str((date)), '%Y-%m-%d').date()
+    spacerepo = SpaceRepository(connection)
+    spaces = []
+    available_list = spacerepo.in_window(datetimevar)
+    for space in available_list:
+        if spacerepo.is_available(space.id, datetimevar):
+            spaces.append(space)
+    return render_template('spaces_available.html', spaces = spaces, date = date)
+
+@app.route('/1/book/<int:id>/', methods = ['POST'])
+def book_date(id):
+    connection = get_flask_database_connection(app)
+    date = request.form['date']
+    spacerepo = SpaceRepository(connection)
+    space = spacerepo.find_by_id(id)
+    return render_template('book.html', date = date, space = space)
+
+@app.route('/1/current_book/<int:id>/', methods = ['POST'])
+def make_booking(id):
+    connection = get_flask_database_connection(app)
+    date = request.form['date']
+    current_booking = Booking(None, date, 1, id)
+    bookrepo = BookingRepository(connection)
+    bookrepo.create(current_booking)
+    return redirect('/1/spaces')
+
 
 
 @app.route('/1/spaces/new', methods=['GET'])
@@ -124,6 +156,7 @@ def get_create_space():
     return render_template('create_space.html')
 
 @app.route('/1/spaces/new', methods=['POST'])
+
 def create_a_space():
     connection = get_flask_database_connection(app)
     id = 1

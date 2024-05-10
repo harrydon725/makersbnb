@@ -32,6 +32,34 @@ def test_is_available_false(db_connection):
     assert spacerepo.is_available(1,'2024-06-10') == False
 
 
+def test_in_window_valid_1result(db_connection):
+    db_connection.seed('seeds/makersbnb.sql')
+    spacerepo = SpaceRepository(db_connection)
+    date = datetime.strptime(str("2026-10-27"), '%Y-%m-%d').date()
+    assert spacerepo.in_window(date) == [Space(4,'Town house',180,'2024-06-25', '2026-10-28', 3)]
+
+def test_in_window_valid_multiple_results(db_connection):
+    db_connection.seed('seeds/makersbnb.sql')
+    spacerepo = SpaceRepository(db_connection)
+    date = datetime.strptime(str("2025-05-19"), '%Y-%m-%d').date()
+    assert spacerepo.in_window(date) == [Space(1,'Studio apartment',100,'2024-05-20', '2025-05-20', 1), Space(3, 'Penthouse',500,'2024-05-25', '2026-05-25',3), Space(4, "Town house",180, '2024-06-25', '2026-10-28',3 )]
+
+
+def test_in_window_invalid(db_connection):
+    db_connection.seed('seeds/makersbnb.sql')
+    spacerepo = SpaceRepository(db_connection)
+    date =  datetime.strptime(str("3000-05-19"), '%Y-%m-%d').date()
+    assert spacerepo.in_window(date) == [f"There was no available Spaces for 3000-05-19"]
+    pass
+
+
+
+
+
+
+
+
+
 
 
 

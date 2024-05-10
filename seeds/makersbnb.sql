@@ -52,3 +52,4 @@ INSERT INTO bookings (booking_date, userID, spaceID) VALUES ('2024-06-10', 4, 1)
 INSERT INTO bookings (booking_date, userID, spaceID) VALUES ('2024-05-12', 5, 2);
 INSERT INTO bookings (booking_date, userID, spaceID) VALUES ('2024-06-10', 1, 3);
 INSERT INTO bookings (booking_date, userID, spaceID) VALUES ('2026-10-28', 2, 4);
+

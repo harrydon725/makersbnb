@@ -15,6 +15,7 @@
     <h1>
         Login to MakersBnB
     </h1>
+
     <form action="/login" method="post">
             {% if email_error%}
             <p class= "t-email_error">
@@ -26,6 +27,7 @@
                 There were errors in your submission: {{password_error}}
             </p>
             {% endif %}
+
         <p>
             <label for="email">Email Address</label>
             <br>

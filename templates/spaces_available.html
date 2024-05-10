@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Spaces| MakersBnB</title>
+</head>
+<body>
+    <div>
+        <a href="/1/spaces"> Spaces</a> |
+        <a href="/1/requests"> Requests</a> |
+        <a href="/"> Sign out</a>
+    </div>
+    <div>
+    <h1>Book a Space</h1>
+
+        <form action="/1/spaces" method="post">
+
+        <p>
+            <label for="">Pick A Date (YYYY-MM-DD)</label>
+            <br>
+            <input type="text" name="Pick A Date" id="pick_a_date">
+            <input type="submit" value="List Available Spaces">
+        </p>
+    </form>
+        <p>
+            <h3>Available Spaces on {{date}}</h3>
+            {% for space in spaces %}
+            <div>Title: {{space.title}} </div>
+            <div>Price: {{space.price}} </div>
+            <form action="/1/book/{{space.id}}" method="post">
+
+                <p>
+                    <label for=""></label>
+                    <input type="hidden" name = "date" value = "{{date}}"  >
+                    <input type="submit" name="Book" id="Book" value = "Book">
+                </p>
+            </form>
+            <div>----------------------------------------------------</div>
+        </p>
+        {% endfor %}
+    </div>
+        
+    
+    
+    
+    
+
+
+        <form action="/1/spaces/new" method="post">
+        <p>
+            <input type="submit" value="Create A Space">
+    
+        </p>
+        </form>
+    </div>
+
+
+    </form>
+</body>
+</html>

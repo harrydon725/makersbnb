@@ -2,6 +2,7 @@ from datetime import datetime
 
 
 class Space():
+
     def __init__(self, id, title, price, start_date, end_date, ownerid):
         self.id = id
         self.title = title
@@ -9,6 +10,7 @@ class Space():
         self.end_date = end_date
         self.ownerid = ownerid
         self.price = price
+
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__

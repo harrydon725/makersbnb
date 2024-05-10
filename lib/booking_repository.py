@@ -14,6 +14,8 @@ class BookingRepository:
         else:
             return booking_list
         
+    
+        
     def create(self, booking):
         self.connection.execute('INSERT INTO bookings (booking_date, userid, spaceid) Values(%s, %s, %s)',[str(booking.booking_date), booking.userid,  booking.spaceid])
         

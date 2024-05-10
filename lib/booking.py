@@ -10,7 +10,7 @@ class Booking:
         return self.__dict__ == other.__dict__
 
     def __repr__(self):
-        return f"Booking({self.id}, {str(self.booking_date)}, {self.userid}, {self.spaceid})"
+        return f"Booking({self.id}, {str(self.booking_date)}, {self.userid}, {self.userid})"
         
         
         

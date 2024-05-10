@@ -14,30 +14,33 @@
         <a href="/"> Sign out</a>
     </div>
     <div>
-        {% if posted %}
+      
+
+  {% if posted %}
         <h2>Thank you for listing {{ space.title }}!</h2>
         {% endif %}
 
         <h1>Book a Space</h1>
-        <form action="/1/spaces/new" method="get">
-            <p>
-                <input type="submit" value="List a Space">
+       <form action="/1/spaces/new" method="get">
 
-            </p>
-        </form>
+    <p>
+        <input type="submit" value="Create A Space">
+    
+    </p>
+    </form>
+  
         <form action="/1/spaces" method="post">
 
-            <p>
-                <label for="available_from">Available from (YYYY-MM-DD)</label>
-                <br>
-                <input type="text" name="available_from" id="available_from">
-            </p>
-            <p>
-                <label for="available_to">Available to (YYYY-MM-DD)</label>
-                <br>
-                <input type="text" name="available_to" id="available_to">
-            </p>
-            <input type="submit" value="List Spaces">
+        <p>
+            <label for="pick_a_date">Pick A Date (YYYY-MM-DD)</label>
+            <input type="text" name="Pick A Date" id="pick_a_date">
+            <br>
+        </p>
+        <input type="submit" value="List Available Spaces">
+        </form>
+        
+      
+      
     </div>
 
 
