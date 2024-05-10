@@ -8,14 +8,15 @@
     </head>
 <body>
     <div>
-        <a href="/1/spaces"> Spaces</a> |
-        <a href="/1/requests"> Requests</a> |
+        <a href="/{{userid}}/spaces"> Spaces</a> |
+        <a href="/{{userid}}/requests"> Requests</a> |
         <a href="/"> Sign out</a>
     </div>
     <div>Title: {{space.title}} </div>
     <div>Price: {{space.price}} </div>
     <div>date: {{date}} </div>
-    <form action="/1/current_book/{{space.id}}" method="post">
+    <!-- <form action="/{{userid}}/current_book/{{space.id}}" method="post"> -->
+        <form action="/{{userid}}/current_book/{{space.id}}" method="post">
 
         <p>
             <label for="Confirm"></label>
