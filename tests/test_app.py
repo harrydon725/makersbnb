@@ -223,7 +223,7 @@ def test_spaces_display_booking_confirmation(page, test_web_address,db_connectio
 def test_create_new_space_error(page, test_web_address):
     page.set_default_timeout(1000)
     page.goto(f"http://{test_web_address}/1/spaces")
-    page.click("text='Create a Space'")
+    page.click("text='Create A Space'")
     page.fill("input[name=available_from]", "2024-05-10")
     page.fill("input[name=available_to]", "2025-05-10")
     page.click("text='List my Space'")

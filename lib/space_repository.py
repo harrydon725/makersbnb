@@ -47,11 +47,6 @@ class SpaceRepository():
             return [f"There was no available Spaces for {date}"]
     
 
-            space.title, space.price, space.start_date, space.end_date, space.ownerid])
-        row = rows[0]
-        space.id = row["id"]
-        return space
-
 
     def is_available(self, space_id, date):
         rows = self._connection.execute(
