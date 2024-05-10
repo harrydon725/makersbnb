@@ -6,16 +6,26 @@
     <title>Requests | MakersBnB</title>
 </head>
 <body>
+    <form action="/{{userid}}/requests'" method="post"></form>
     <div>
-        <a href="/1/spaces"> Spaces</a> |
-        <a href="/1/requests"> Requests</a> |
+        <a href="/{{userid}}/spaces"> Spaces</a> |
+        <a href="/{{userid}}/requests"> Requests</a> |
         <a href="/"> Sign out</a>
     </div>
     <div>
     <h1>Requests</h1>
     </div>
     <h2>Requests I've made</h2>
+    {% for booking in bookings %}
+        <div>Title: {{space}} </div>
+        <div>Date: {{booking.booking_date}} </div>
+        <div>----------------------------------------------------</div>
+        {% endfor %}
     <h2>Requests I've received</h2>
-
+    {% for request in requests %}
+        <div>Title: {{space}} </div>
+        <div>Date: {{booking.booking_date}} </div>
+        <div>----------------------------------------------------</div>
+        {% endfor %}
 </body>
 </html>

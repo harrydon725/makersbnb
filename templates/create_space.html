@@ -9,13 +9,13 @@
 
 <body>
     <div>
-        <a href="/spaces"> Spaces</a> |
-        <a href="/requests"> Requests</a> |
+        <a href="/{{userid}}/spaces"> Spaces</a> |
+        <a href="/{{userid}}/requests"> Requests</a> |
         <a href="/"> Sign out</a>
     </div>
     <h1>List a Space</h1>
 
-    <form action="/1/spaces/new" method="post">
+    <form action="/{{userid}}/spaces/new" method="post">
         {% if errors %}
         <h2 class="errors">
             Your form contained some errors: {{errors}}

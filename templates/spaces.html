@@ -9,8 +9,8 @@
 
 <body>
     <div>
-        <a href="/1/spaces"> Spaces</a> |
-        <a href="/1/requests"> Requests</a> |
+        <a href="/{{userid}}/spaces"> Spaces</a> |
+        <a href="/{{userid}}/requests"> Requests</a> |
         <a href="/"> Sign out</a>
     </div>
     <div>
@@ -21,7 +21,7 @@
         {% endif %}
 
         <h1>Book a Space</h1>
-       <form action="/1/spaces/new" method="get">
+       <form action="/{{userid}}/spaces/new" method="get">
 
     <p>
         <input type="submit" value="Create A Space">
@@ -29,7 +29,12 @@
     </p>
     </form>
   
-        <form action="/1/spaces" method="post">
+        <form action="/{{userid}}/spaces" method="post">
+            {% if date_error%}
+            <p class= "t-date_error">
+                There were errors in your submission: {{date_error}}
+            </p>
+            {% endif %}
 
         <p>
             <label for="pick_a_date">Pick A Date (YYYY-MM-DD)</label>

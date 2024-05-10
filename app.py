@@ -114,14 +114,18 @@ def get_about():
     return render_template('about.html')
 
 
-@app.route('/1/spaces', methods=['GET'])
-def get_spaces():
-    return render_template('spaces.html')
+@app.route('/<int:id>/spaces', methods=['GET'])
+def get_spaces(id):
+    return render_template('spaces.html', userid = id)
 
 
-@app.route('/1/spaces', methods=['POST'])
-def get_spaces_available_spaces():
+@app.route('/<int:id>/spaces', methods=['POST'])
+def get_spaces_available_spaces(id):
     connection = get_flask_database_connection(app)
+    date = None
+    if not request.form['Pick A Date']:
+        date_error = "Date must not be empty"
+        return render_template('spaces.html', date_error=date_error, userid = id)
     date = request.form['Pick A Date']
     datetimevar = datetime.strptime(str((date)), '%Y-%m-%d').date()
     spacerepo = SpaceRepository(connection)
@@ -130,36 +134,46 @@ def get_spaces_available_spaces():
     for space in available_list:
         if spacerepo.is_available(space.id, datetimevar):
             spaces.append(space)
-    return render_template('spaces_available.html', spaces = spaces, date = date)
+    return render_template('spaces_available.html', spaces = spaces, date = date, userid = id)
 
-@app.route('/1/book/<int:id>/', methods = ['POST'])
-def book_date(id):
+@app.route('/<int:id>/book/<int:id1>/', methods = ['POST'])
+def book_date(id, id1):
     connection = get_flask_database_connection(app)
     date = request.form['date']
     spacerepo = SpaceRepository(connection)
-    space = spacerepo.find_by_id(id)
-    return render_template('book.html', date = date, space = space)
+    space = spacerepo.find_by_id(id1)
+    return render_template('book.html', date = date, space = space, userid = id)
 
-@app.route('/1/current_book/<int:id>/', methods = ['POST'])
-def make_booking(id):
+@app.route('/<int:id>/current_book/<int:id1>/', methods = ['POST'])
+def make_booking(id, id1):
     connection = get_flask_database_connection(app)
     date = request.form['date']
-    current_booking = Booking(None, date, 1, id)
+    current_booking = Booking(None, date, id, id1)
     bookrepo = BookingRepository(connection)
     bookrepo.create(current_booking)
-    return redirect('/1/spaces')
+    space_repo = SpaceRepository(connection)
+    book_repo = BookingRepository(connection)
+    book_info = book_repo.find_all_bookings_user(id)
+    # print (book_info)
+    for booking in book_info:
+        space_id = booking.spaceid
+        # print(space_id)
+        requested_space = space_repo.find_by_id(space_id)
+        print (requested_space.title)
+    # space_info = space_repo.find_by_id(book_info)
+    # print(space_info)
+    return render_template('requests.html', userid = id, bookings = book_info, space = requested_space.title)
+    # return redirect(f'/{id}/requests')
 
 
 
-@app.route('/1/spaces/new', methods=['GET'])
-def get_create_space():
-    return render_template('create_space.html')
+@app.route('/<int:id>/spaces/new', methods=['GET'])
+def get_create_space(id):
+    return render_template('create_space.html', userid = id)
 
-@app.route('/1/spaces/new', methods=['POST'])
-
-def create_a_space():
+@app.route('/<int:id>/spaces/new', methods=['POST'])
+def create_a_space(id):
     connection = get_flask_database_connection(app)
-    id = 1
     repo = SpaceRepository(connection)
     title = request.form['title']
     price = None
@@ -171,22 +185,29 @@ def create_a_space():
     if not space.is_valid():
         return render_template('create_space.html', errors=space.generate_errors())
     repo.create(space)
-    return render_template('spaces.html', posted=True, space=space)
+    return render_template('spaces.html', posted=True, space=space, userid = id)
 
 
-@app.route('/1/requests', methods=['GET'])
-def get_requests():
-    return render_template('requests.html')
+@app.route('/<int:id>/requests', methods=['GET'])
+def get_requests(id):
+    return render_template('requests.html', userid = id)
 
 
-@app.route('/1/requests', methods=['POST'])
-def post_requests():
-    return render_template('requests.html')
-
-
-@app.route('/1/spaces/1', methods=(['GET']))  # change 1 to id later
-def post_request_space():
-    return render_template('single_space.html')
+# @app.route('/<int:id>/requests', methods=['POST'])
+# def post_requests(id):
+#     connection = get_flask_database_connection(app)
+#     space_repo = SpaceRepository(connection)
+#     book_repo = BookingRepository(connection)
+#     book_info = book_repo.find_all_bookings_user(id)
+#     # print (book_info)
+#     for booking in book_info:
+#         space_id = booking.spaceid
+#         # print(space_id)
+#         requested_space = space_repo.find_by_id(space_id)
+#         print (requested_space.title)
+#     # space_info = space_repo.find_by_id(book_info)
+#     # print(space_info)
+#     return render_template('requests.html', userid = id, bookings = book_info, space = requested_space.title)
 
 
 # These lines start the server if you run this file directly
