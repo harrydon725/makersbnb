@@ -29,4 +29,17 @@ class UserRepository:
             user_list.append(current_user)
         return user_list
 
+    def find_bookings_with_name(self,userid):
+        rows = self.connection.execute(f"SELECT * FROM bookings WHERE userID = {userid}")
+        listbookings = []
+        print(rows)
+        for row in rows:
+            outputstring = ""
+            spaces = self.connection.execute(f"SELECT title FROM spaces WHERE id = {row['spaceid']}")
+            print(spaces)
+            name = spaces[0]['title']
+            outputstring = f"{name} {str(row['booking_date'])}"
+            print(outputstring)
+            listbookings.append(outputstring)
+        return listbookings
 

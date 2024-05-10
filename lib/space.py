@@ -16,7 +16,7 @@ class Space():
         return self.__dict__ == other.__dict__
 
     def __repr__(self):
-        return f"Space({self.id}, {self.title}, {self.start_date}, {self.end_date}, {self.ownerid}, {self.price})"
+        return f"Space({self.id}, {str(self.title)}, {self.start_date}, {self.end_date}, {self.ownerid}, {self.price})"
 
     def generate_errors(self):
         errors = []

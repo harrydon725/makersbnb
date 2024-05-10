@@ -7,7 +7,6 @@
         <link rel="stylesheet" href="/static/style.css" >
     </head>
 <body>
-    <form action="/{{userid}}/requests'" method="post"></form>
     <div>
         <a href="/{{userid}}/spaces"> Spaces</a> |
         <a href="/{{userid}}/requests"> Requests</a> |
@@ -17,16 +16,22 @@
     <h1>Requests</h1>
     </div>
     <h2>Requests I've made</h2>
+        <!-- <p>
+            {% for booking in bookings %}
+            <div>{{booking}} </div>
+            {% endfor %}
+        </p> -->
+    <!-- <h2>Requests I've made</h2>
     {% for booking in bookings %}
-        <div>Title: {{space}} </div>
-        <div>Date: {{booking.booking_date}} </div>
+        <div>Booking Space Name: {{space.title}} </div>
+        <div>Booking Space Date: {{booking.booking_date}} </div>
         <div>----------------------------------------------------</div>
-        {% endfor %}
+        {% endfor %} -->
     <h2>Requests I've received</h2>
-    {% for request in requests %}
+    <!-- {% for request in requests %}
         <div>Title: {{space}} </div>
         <div>Date: {{booking.booking_date}} </div>
         <div>----------------------------------------------------</div>
-        {% endfor %}
+        {% endfor %} -->
 </body>
 </html>

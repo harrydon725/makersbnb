@@ -151,21 +151,7 @@ def make_booking(id, id1):
     current_booking = Booking(None, date, id, id1)
     bookrepo = BookingRepository(connection)
     bookrepo.create(current_booking)
-    space_repo = SpaceRepository(connection)
-    book_repo = BookingRepository(connection)
-    book_info = book_repo.find_all_bookings_user(id)
-    # print (book_info)
-    for booking in book_info:
-        space_id = booking.spaceid
-        # print(space_id)
-        requested_space = space_repo.find_by_id(space_id)
-        print (requested_space.title)
-    # space_info = space_repo.find_by_id(book_info)
-    # print(space_info)
-    return render_template('requests.html', userid = id, bookings = book_info, space = requested_space.title)
-    # return redirect(f'/{id}/requests')
-
-
+    return redirect(f'/{id}/spaces')
 
 @app.route('/<int:id>/spaces/new', methods=['GET'])
 def get_create_space(id):
@@ -190,7 +176,23 @@ def create_a_space(id):
 
 @app.route('/<int:id>/requests', methods=['GET'])
 def get_requests(id):
+    connection = get_flask_database_connection(app)
+    userrepo = UserRepository(connection)
+    # bookinglist = userrepo.find_bookings_with_name(id)
     return render_template('requests.html', userid = id)
+    # connection = get_flask_database_connection(app)
+    # user_repo = UserRepository(connection)
+    # book_repo = BookingRepository(connection)
+    # space_repo = SpaceRepository(connection)
+    # book_info = book_repo.find_all_bookings_user(id)
+    # list = user_repo.find_bookings_with_name(id)
+    # requested_space = None
+    # for booking in book_info:
+    #     space_id = booking.spaceid
+    #     # print(space_id)
+    #     requested_space = space_repo.find_by_id(space_id)
+    #     print (requested_space.title)
+    # return render_template('requests.html', userid = id, bookings = list, space = requested_space)
 
 
 # @app.route('/<int:id>/requests', methods=['POST'])
